@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
 {
-    Schema::create('articles', function (Blueprint $table) {
-        $table->bigIncrements('id');
-        $table->string('title');
-        $table->string('url');
-        $table->text('comment')->nullable();
+    Schema::create('companies', function (Blueprint $table) {
+        $table->id();
+        $table->string('name')->unique(); // 企業名
         $table->timestamps();
     });
 }
+
 
     /**
      * Reverse the migrations.
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personal_access_tokens');
+        Schema::dropIfExists('companies');
     }
 };

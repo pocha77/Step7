@@ -12,15 +12,11 @@ return new class extends Migration
      * @return void
      */
     public function up()
-{
-    Schema::create('articles', function (Blueprint $table) {
-        $table->bigIncrements('id');
-        $table->string('title');
-        $table->string('url');
-        $table->text('comment')->nullable();
-        $table->timestamps();
-    });
-}
+    {
+        Schema::table('products', function (Blueprint $table) {
+            $table->text('comment')->nullable(); // コメント欄を追加
+        });
+    }
 
     /**
      * Reverse the migrations.
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('personal_access_tokens');
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropColumn('comment'); // コメント欄を削除
+        });
     }
 };

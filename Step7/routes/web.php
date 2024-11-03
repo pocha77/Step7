@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// 認証されたユーザーのみがアクセスできるProduct関連ルート
+Route::resource('products', ProductController::class)->middleware('auth');
+
+// 認証ルートの登録
+Auth::routes();
+
+// ホーム画面へのルート
+Route::get('/home', [HomeController::class, 'index'])->name('home');

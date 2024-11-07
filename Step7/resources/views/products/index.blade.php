@@ -15,7 +15,7 @@
                     <option value="">企業名で検索</option>
                     @foreach($companies as $company)
                         <option value="{{ $company->id }}" {{ request('company_id') == $company->id ? 'selected' : '' }}>
-                            {{ $company->name }}
+                            {{ $company->company_name }}
                         </option>
                     @endforeach
                 </select>
@@ -47,16 +47,16 @@
                 <tr>
                     <td>{{ $product->id }}</td>
                     <td>
-                        @if ($product->image_path)
-                            <img src="{{ asset('storage/' . $product->image_path) }}" alt="商品画像" width="50">
+                        @if ($product->img_path)
+                            <img src="{{ asset('storage/' . $product->img_path) }}" alt="商品画像" width="50">
                         @else
                             画像なし
                         @endif
                     </td>
-                    <td>{{ $product->name }}</td>
+                    <td>{{ $product->product_name }}</td>
                     <td>{{ number_format($product->price) }}円</td>
                     <td>{{ $product->stock }}</td>
-                    <td>{{ $product->company->name }}</td>
+                    <td>{{ $product->company->company_name }}</td>
                     <td>
                         <a href="{{ route('products.show', $product->id) }}" class="btn btn-info btn-sm">詳細</a>
                         <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">

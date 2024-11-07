@@ -3,16 +3,20 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Company;
 
 class CompaniesTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('companies')->insert([
-            ['name' => 'キリン'],
-            ['name' => 'サントリー'],
-            ['name' => 'コカ・コーラ'],
-        ]);
+        $companies = [
+            ['company_name' => 'コカ・コーラ'],
+            ['company_name' => 'サントリー'],
+            ['company_name' => 'キリン'],
+        ];
+
+        foreach ($companies as $company) {
+            Company::create($company);
+        }
     }
 }

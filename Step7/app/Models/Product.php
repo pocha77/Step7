@@ -9,12 +9,11 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'company_id', 'price', 'stock', 'image_path', 'comment'];
+    // fillable プロパティにカラム名を統一
+    protected $fillable = ['product_name', 'company_id', 'price', 'stock', 'img_path', 'comment'];
 
     public function company()
     {
         return $this->belongsTo(Company::class);
     }
 }
-
-

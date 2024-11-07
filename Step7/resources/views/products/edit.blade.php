@@ -13,40 +13,52 @@
     <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+        
+        <!-- 商品名 -->
         <div class="mb-3">
-            <label for="name" class="form-label">商品名</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ $product->name }}" required>
+            <label for="product_name" class="form-label">商品名</label>
+            <input type="text" class="form-control" id="product_name" name="product_name" value="{{ $product->product_name }}" required>
         </div>
+
+        <!-- メーカー -->
         <div class="mb-3">
             <label for="company_id" class="form-label">メーカー</label>
             <select class="form-control" id="company_id" name="company_id" required>
                 @foreach($companies as $company)
                     <option value="{{ $company->id }}" {{ $product->company_id == $company->id ? 'selected' : '' }}>
-                        {{ $company->name }}
+                        {{ $company->company_name }}
                     </option>
                 @endforeach
             </select>
         </div>
+
+        <!-- 価格 -->
         <div class="mb-3">
             <label for="price" class="form-label">価格</label>
-            <!-- 小数点以下を表示しないようにformat関数で整数にフォーマット -->
             <input type="number" class="form-control" id="price" name="price" value="{{ number_format($product->price, 0) }}" required>
         </div>
+
+        <!-- 在庫数 -->
         <div class="mb-3">
             <label for="stock" class="form-label">在庫数</label>
             <input type="number" class="form-control" id="stock" name="stock" value="{{ $product->stock }}" required>
         </div>
+
+        <!-- コメント -->
         <div class="mb-3">
-    <label for="comment" class="form-label">コメント</label>
-    <textarea class="form-control" id="comment" name="comment" rows="3">{{ $product->comment }}</textarea>
-</div>
+            <label for="comment" class="form-label">コメント</label>
+            <textarea class="form-control" id="comment" name="comment" rows="3">{{ $product->comment }}</textarea>
+        </div>
+
+        <!-- 商品画像 -->
         <div class="mb-3">
             <label for="image" class="form-label">商品画像</label>
             <input type="file" class="form-control" id="image" name="image">
-            @if($product->image_path)
-                <img src="{{ asset('storage/' . $product->image_path) }}" alt="商品画像" width="100" class="mt-2">
+            @if($product->img_path)
+                <img src="{{ asset('storage/' . $product->img_path) }}" alt="商品画像" width="100" class="mt-2">
             @endif
         </div>
+
         <button type="submit" class="btn btn-primary">更新</button>
         <a href="{{ route('products.show', $product->id) }}" class="btn btn-secondary">戻る</a>
     </form>

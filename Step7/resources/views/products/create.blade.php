@@ -6,15 +6,16 @@
     <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
-            <label for="name" class="form-label">商品名</label>
-            <input type="text" name="name" class="form-control" id="name" required>
-        </div>
+    <label for="product_name" class="form-label">商品名</label>
+    <input type="text" name="product_name" class="form-control" id="product_name" required>
+</div>
         
         <div class="mb-3">
             <label for="company_id" class="form-label">メーカー</label>
             <select name="company_id" id="company_id" class="form-control" required>
+                <!-- 企業一覧の選択肢 -->
                 @foreach($companies as $company)
-                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                    <option value="{{ $company->id }}">{{ $company->company_name }}</option>
                 @endforeach
             </select>
         </div>

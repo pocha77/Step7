@@ -11,15 +11,16 @@
             
             <div style="display: flex; align-items: center;">
                 <p style="margin-right: 10px;">商品画像:</p>
-                @if($product->image_path)
-                    <img src="{{ asset('storage/' . $product->image_path) }}" alt="商品画像" width="90">
+                @if($product->img_path)
+                    <!-- img_pathを使用して商品画像を表示 -->
+                    <img src="{{ asset('storage/' . $product->img_path) }}" alt="商品画像" width="90">
                 @else
                     <p>画像なし</p>
                 @endif
             </div>
 
-            <p class="card-title">商品名: {{ $product->name }}</p>
-            <p class="card-text">メーカー: {{ $product->company->name }}</p>
+            <p class="card-title">商品名: {{ $product->product_name }}</p>
+            <p class="card-text">メーカー: {{ $product->company->company_name }}</p>
             <p class="card-text">価格: {{ number_format($product->price) }}円</p>
             <p class="card-text">在庫数: {{ $product->stock }}</p>
             <p class="card-text">コメント: {{ $product->comment }}</p>

@@ -4,6 +4,19 @@
 <div class="container">
     <h1>商品一覧画面</h1>
 
+    <!-- 成功・エラーメッセージの表示 -->
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <!-- 検索フォーム -->
     <form method="GET" action="{{ route('products.index') }}" class="mb-3">
         <div class="row">
@@ -43,7 +56,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($products as $product)
+            @forelse($products as $product)
                 <tr>
                     <td>{{ $product->id }}</td>
                     <td>
@@ -66,7 +79,11 @@
                         </form>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="7" class="text-center">データがありません</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 </div>

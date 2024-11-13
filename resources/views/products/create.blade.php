@@ -22,7 +22,7 @@
         @csrf
         <div class="mb-3">
             <label for="product_name" class="form-label">商品名</label>
-            <input type="text" name="product_name" class="form-control @error('product_name') is-invalid @enderror" id="product_name" value="{{ old('product_name') }}" required>
+            <input type="text" name="product_name" class="form-control @error('product_name') is-invalid @enderror" id="product_name" value="{{ old('product_name') }}">
             @error('product_name')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -30,7 +30,7 @@
 
         <div class="mb-3">
             <label for="company_id" class="form-label">メーカー</label>
-            <select name="company_id" id="company_id" class="form-control @error('company_id') is-invalid @enderror" required>
+            <select name="company_id" id="company_id" class="form-control @error('company_id') is-invalid @enderror">
                 <option value="">選択してください</option>
                 @foreach($companies as $company)
                     <option value="{{ $company->id }}" {{ old('company_id') == $company->id ? 'selected' : '' }}>
@@ -45,7 +45,7 @@
 
         <div class="mb-3">
             <label for="price" class="form-label">価格</label>
-            <input type="number" name="price" class="form-control @error('price') is-invalid @enderror" id="price" value="{{ old('price') }}" required>
+            <input type="number" name="price" class="form-control @error('price') is-invalid @enderror" id="price" value="{{ old('price') }}">
             @error('price')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -53,7 +53,7 @@
 
         <div class="mb-3">
             <label for="stock" class="form-label">在庫数</label>
-            <input type="number" name="stock" class="form-control @error('stock') is-invalid @enderror" id="stock" value="{{ old('stock') }}" required>
+            <input type="number" name="stock" class="form-control @error('stock') is-invalid @enderror" id="stock" value="{{ old('stock') }}">
             @error('stock')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror

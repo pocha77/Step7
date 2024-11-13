@@ -31,7 +31,7 @@
         <!-- 商品名 -->
         <div class="mb-3">
             <label for="product_name" class="form-label">商品名</label>
-            <input type="text" class="form-control @error('product_name') is-invalid @enderror" id="product_name" name="product_name" value="{{ old('product_name', $product->product_name) }}" required>
+            <input type="text" class="form-control @error('product_name') is-invalid @enderror" id="product_name" name="product_name" value="{{ old('product_name', $product->product_name) }}">
             @error('product_name')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -40,8 +40,8 @@
         <!-- メーカー -->
         <div class="mb-3">
             <label for="company_id" class="form-label">メーカー</label>
-            <select class="form-control @error('company_id') is-invalid @enderror" id="company_id" name="company_id" required>
-                <option value="">選択してください</option> <!-- 追加 -->
+            <select class="form-control @error('company_id') is-invalid @enderror" id="company_id" name="company_id">
+                <option value="">選択してください</option>
                 @foreach($companies as $company)
                     <option value="{{ $company->id }}" {{ old('company_id', $product->company_id) == $company->id ? 'selected' : '' }}>
                         {{ $company->company_name }}
@@ -56,7 +56,7 @@
         <!-- 価格 -->
         <div class="mb-3">
             <label for="price" class="form-label">価格</label>
-            <input type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price', $product->price) }}" required>
+            <input type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price', $product->price) }}">
             @error('price')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -65,7 +65,7 @@
         <!-- 在庫数 -->
         <div class="mb-3">
             <label for="stock" class="form-label">在庫数</label>
-            <input type="number" class="form-control @error('stock') is-invalid @enderror" id="stock" name="stock" value="{{ old('stock', $product->stock) }}" required>
+            <input type="number" class="form-control @error('stock') is-invalid @enderror" id="stock" name="stock" value="{{ old('stock', $product->stock) }}">
             @error('stock')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror

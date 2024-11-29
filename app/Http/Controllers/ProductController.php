@@ -11,29 +11,60 @@ class ProductController extends Controller {
     
     public function index(Request $request) {
         $query = Product::with('company');
-
+    
         // 商品名検索
         if ($request->filled('search')) {
             $query->where('product_name', 'like', '%' . $request->search . '%');
         }
-
+    
         // 企業名検索
         if ($request->filled('company_id')) {
             $query->where('company_id', $request->company_id);
         }
-
+    
+        // 価格範囲検索
+        if ($request->filled('price_min')) {
+            $query->where('price', '>=', $request->price_min);
+        }
+        if ($request->filled('price_max')) {
+            $query->where('price', '<=', $request->price_max);
+        }
+    
+        // 在庫範囲検索
+        if ($request->filled('stock_min')) {
+            $query->where('stock', '>=', $request->stock_min);
+        }
+        if ($request->filled('stock_max')) {
+            $query->where('stock', '<=', $request->stock_max);
+        }
+    
+        // 非同期リクエストに対するJSONレスポンス
+        if ($request->ajax()) {
+            $products = $query->get()->map(function ($product) {
+                $product->img_path = $product->img_path ? asset('storage/' . $product->img_path) : null;
+                $product->company_name = $product->company->company_name ?? null; // 関連データを明示的に返す
+                return $product;
+            });
+    
+            return response()->json([
+                'products' => $products
+            ]);
+        }
+    
+        // 通常の画面表示
         $products = $query->get();
         $companies = Company::all();
-
+    
         return view('products.index', compact('products', 'companies'));
     }
-
+    
+    
     public function create() {
         $companies = Company::select('id', 'company_name')->distinct()->get();
         return view('products.create', compact('companies'));
     }
 
-    public function store(ProductRequest $request) { // ProductRequest に置き換え
+    public function store(ProductRequest $request) {
         \Log::info('storeメソッドが呼び出されました');
     
         try {
@@ -68,7 +99,7 @@ class ProductController extends Controller {
         return view('products.edit', compact('product', 'companies'));
     }
 
-    public function update(ProductRequest $request, Product $product) { // ProductRequest に置き換え
+    public function update(ProductRequest $request, Product $product) {
         try {
             if ($request->hasFile('image')) {
                 $path = $request->file('image')->store('images', 'public');
@@ -93,10 +124,25 @@ class ProductController extends Controller {
     public function destroy(Product $product) {
         try {
             $product->delete();
+    
+            // 非同期リクエストへの対応
+            if (request()->ajax()) {
+                return response()->json(['message' => '商品が削除されました。'], 200);
+            }
+    
+            // 通常リクエストへの対応
             return redirect()->route('products.index')->with('success', '商品が削除されました');
         } catch (\Exception $e) {
             \Log::error('削除中にエラーが発生しました: ' . $e->getMessage());
+    
+            // 非同期リクエストへの対応
+            if (request()->ajax()) {
+                return response()->json(['error' => '商品の削除に失敗しました。'], 500);
+            }
+    
+            // 通常リクエストへの対応
             return back()->with('error', '商品の削除に失敗しました');
         }
     }
+    
 }

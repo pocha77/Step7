@@ -12,8 +12,12 @@ class Product extends Model
     // fillable プロパティにカラム名を統一
     protected $fillable = ['product_name', 'company_id', 'price', 'stock', 'img_path', 'comment'];
 
+    /**
+     * Company モデルとのリレーション
+     */
     public function company()
     {
         return $this->belongsTo(Company::class);
     }
 }
+
